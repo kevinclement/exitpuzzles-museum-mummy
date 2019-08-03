@@ -9,9 +9,12 @@ public:
 
   void setup();
   void handle();
+  void printVariables();
+  void open();
+  void close();
 
 private:
   void readStoredVariables();
-  void printVariables();
+  
 };
 

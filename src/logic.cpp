@@ -3,8 +3,14 @@
 #include "logic.h"
 #include "consts.h"
 
-int  FOO_VAR;                  // some foo desc
-int  FOO_VAR_ADDR = 0;         // where to store foo in eeprom
+int LS_ONE = 0;                   // light sensor 1 reading
+int LS_TWO = 0;                   // light sensor 2 reading
+int LS_THREE = 0;                 // light sensor 3 reading
+
+int LS_ONE_THRESH = 3700;
+int LS_TWO_THRESH = 0;
+int LS_THREE_THRESH = 0;
+int FOO_VAR_ADDR = 0;         // where to store foo in eeprom
 
 Logic::Logic() 
   : serial(*this)
@@ -12,16 +18,44 @@ Logic::Logic()
 }
 
 void Logic::setup() {
-    serial.setup();
+  serial.setup();
 
-    readStoredVariables();
+  readStoredVariables();
 
-    serial.printHelp();
-    printVariables();
+  serial.printHelp();
+  printVariables();
+
+  pinMode(13, OUTPUT);
+  pinMode(34, INPUT);
+  pinMode(39, INPUT);
+  pinMode(36, INPUT);
 }
 
 void Logic::handle() {
-    serial.handle();
+  serial.handle();
+
+  LS_ONE = analogRead(34);
+  LS_TWO = analogRead(39);
+  LS_THREE = analogRead(36);
+  
+  if (LS_ONE > LS_ONE_THRESH) {
+    Serial.println("LASER ON!");
+    Serial.printf("0: %d 1: %d 2: %d\n", LS_ONE, LS_TWO, LS_THREE);
+    digitalWrite(13, HIGH); //Turn led on
+  }
+  else {
+    digitalWrite(13, LOW);  //Turn led off
+  }
+
+  delay(500);
+}
+
+void Logic::open() {
+
+}
+
+void Logic::close() {
+
 }
 
 void Logic::readStoredVariables() {
@@ -32,5 +66,7 @@ void Logic::readStoredVariables() {
 void Logic::printVariables() { 
   serial.print(CRLF);
   serial.print("Current Variables:%s", CRLF);
-  serial.print("  foo:  %d%s", FOO_VAR, CRLF);
+  serial.print("  ONE:  %d%s", LS_ONE, CRLF);
+  serial.print("  TWO:  %d%s", LS_TWO, CRLF);
+  serial.print("  THREE:  %d%s", LS_THREE, CRLF);
 }

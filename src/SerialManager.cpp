@@ -13,7 +13,7 @@ SerialManager::SerialManager(Logic &logic)
 void SerialManager::setup() {
   Serial.begin(115200);
 
-  Serial.printf("Museum Laser Controller by kevinc...\n");
+  Serial.printf("Museum Mummy by kevinc...\n");
 
   // set read timeout to something really low so we don't hang
   Serial.setTimeout(10);
@@ -21,7 +21,7 @@ void SerialManager::setup() {
   while (!Serial); // Wait untilSerial is ready 
 
   // Bluetooth device name
-  SerialBT.begin("FooBTName");
+  SerialBT.begin("ExitMuseumMummy");
 }
 
 void SerialManager::print(const char *fmt, ...) {
@@ -82,17 +82,13 @@ void SerialManager::handleMessage(String msg) {
       }
   }
  
-  if (command == "enable") {
-    print("enabling device to drop now...%s", CRLF);
+  if (command == "open") {
+    print("opening device now...%s", CRLF);
     //ENABLED = true;
   }
-  else if (command == "disable") {
-    print("disabling device now...%s", CRLF);
+  else if (command == "close") {
+    print("closing device now...%s", CRLF);
     //ENABLED = false;
-  }
-  else if (command == "drop") {
-    //FORCE_DROP = true;
-    print("dropping bottom now...%s", CRLF);
   }
   else if (command == "threshold") {
     print("setting threshold to '%d'...%s", value, CRLF);
@@ -101,7 +97,7 @@ void SerialManager::handleMessage(String msg) {
     // EEPROM.commit();    
   }
   else if (command == "status") {
-    //printVariables();
+    _logic.printVariables();
   }
   else if (command == "reset") {
     ESP.restart();
@@ -115,7 +111,8 @@ void SerialManager::handleMessage(String msg) {
 
 void SerialManager::printHelp() {
   Serial.println("Available commands:");
-  Serial.println("  enable         - turns device on");
+  Serial.println("  open           - opens device");
+  Serial.println("  close          - closes device");
   Serial.println("  foo N          - set foo to value N");
   Serial.println("  status         - prints the status of the device variables");
   Serial.println("  reset          - software reset the device");
