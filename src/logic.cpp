@@ -5,11 +5,9 @@
 
 int LS_ONE = 0;                   // light sensor 1 reading
 int LS_TWO = 0;                   // light sensor 2 reading
-int LS_THREE = 0;                 // light sensor 3 reading
 
 int LS_ONE_THRESH = 3700;
 int LS_TWO_THRESH = 0;
-int LS_THREE_THRESH = 0;
 int FOO_VAR_ADDR = 0;         // where to store foo in eeprom
 
 Logic::Logic() 
@@ -28,7 +26,6 @@ void Logic::setup() {
   pinMode(13, OUTPUT);
   pinMode(34, INPUT);
   pinMode(39, INPUT);
-  pinMode(36, INPUT);
 }
 
 void Logic::handle() {
@@ -36,11 +33,11 @@ void Logic::handle() {
 
   LS_ONE = analogRead(34);
   LS_TWO = analogRead(39);
-  LS_THREE = analogRead(36);
   
+  Serial.printf("1: %d 2: %d \n", LS_ONE, LS_TWO);
   if (LS_ONE > LS_ONE_THRESH) {
     Serial.println("LASER ON!");
-    Serial.printf("0: %d 1: %d 2: %d\n", LS_ONE, LS_TWO, LS_THREE);
+    Serial.printf("0: %d 1: %d \n", LS_ONE, LS_TWO);
     digitalWrite(13, HIGH); //Turn led on
   }
   else {
@@ -68,5 +65,4 @@ void Logic::printVariables() {
   serial.print("Current Variables:%s", CRLF);
   serial.print("  ONE:  %d%s", LS_ONE, CRLF);
   serial.print("  TWO:  %d%s", LS_TWO, CRLF);
-  serial.print("  THREE:  %d%s", LS_THREE, CRLF);
 }
