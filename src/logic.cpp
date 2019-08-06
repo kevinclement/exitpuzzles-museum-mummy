@@ -10,6 +10,12 @@ int LS_ONE_THRESH = 3700;
 int LS_TWO_THRESH = 0;
 int FOO_VAR_ADDR = 0;         // where to store foo in eeprom
 
+// motor control
+#define PWMA 14
+#define AIN1 15
+#define AIN2 32
+#define STBY 33
+
 Logic::Logic() 
   : serial(*this)
 {
@@ -23,28 +29,35 @@ void Logic::setup() {
   serial.printHelp();
   printVariables();
 
-  pinMode(13, OUTPUT);
-  pinMode(34, INPUT);
-  pinMode(39, INPUT);
+  pinMode(PWMA, OUTPUT);
+  pinMode(AIN1, OUTPUT);
+  pinMode(AIN2, OUTPUT);
+  pinMode(STBY, OUTPUT);
 }
 
 void Logic::handle() {
   serial.handle();
 
-  LS_ONE = analogRead(34);
-  LS_TWO = analogRead(39);
-  
-  Serial.printf("1: %d 2: %d \n", LS_ONE, LS_TWO);
-  if (LS_ONE > LS_ONE_THRESH) {
-    Serial.println("LASER ON!");
-    Serial.printf("0: %d 1: %d \n", LS_ONE, LS_TWO);
-    digitalWrite(13, HIGH); //Turn led on
-  }
-  else {
-    digitalWrite(13, LOW);  //Turn led off
-  }
+  digitalWrite(AIN1, LOW);
+  digitalWrite(AIN2, HIGH);
 
-  delay(500);
+  digitalWrite(PWMA, HIGH);
+  digitalWrite(STBY, HIGH);
+
+  // LS_ONE = analogRead(34);
+  // LS_TWO = analogRead(39);
+  
+  // Serial.printf("1: %d 2: %d \n", LS_ONE, LS_TWO);
+  // if (LS_ONE > LS_ONE_THRESH) {
+  //   Serial.println("LASER ON!");
+  //   Serial.printf("0: %d 1: %d \n", LS_ONE, LS_TWO);
+  //   digitalWrite(13, HIGH); //Turn led on
+  // }
+  // else {
+  //   digitalWrite(13, LOW);  //Turn led off
+  // }
+
+  // delay(500);
 }
 
 void Logic::open() {
