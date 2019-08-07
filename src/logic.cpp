@@ -10,6 +10,10 @@ int LS_ONE_THRESH = 3700;
 int LS_TWO_THRESH = 0;
 int FOO_VAR_ADDR = 0;         // where to store foo in eeprom
 
+int freq = 5000;
+int ledChannel = 0;
+int resolution = 8;
+
 // motor control
 #define PWMA 14
 #define AIN1 15
@@ -29,6 +33,9 @@ void Logic::setup() {
   serial.printHelp();
   printVariables();
 
+  ledcSetup(ledChannel, freq, resolution);
+  ledcAttachPin(27, ledChannel);
+
   pinMode(PWMA, OUTPUT);
   pinMode(AIN1, OUTPUT);
   pinMode(AIN2, OUTPUT);
@@ -37,6 +44,16 @@ void Logic::setup() {
 
 void Logic::handle() {
   serial.handle();
+
+  for (int dutyCycle = 0; dutyCycle <= 255; dutyCycle++) {
+    ledcWrite(ledChannel, dutyCycle);
+    delay(7);
+  }
+ 
+  for (int dutyCycle = 255; dutyCycle >= 0; dutyCycle--) {
+    ledcWrite(ledChannel, dutyCycle);
+    delay(7);
+  }
 
   digitalWrite(AIN1, LOW);
   digitalWrite(AIN2, HIGH);
