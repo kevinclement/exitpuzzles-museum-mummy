@@ -5,7 +5,7 @@
 #include "consts.h"
 
 int LS_ONE = 0;               // light sensor 1 reading
-int LS_ONE_THRESH = 3700;
+int LS_ONE_THRESH = 1800;
 int LS_TWO = 0;               // light sensor 2 reading
 
 int LS_TWO_THRESH = 0;
@@ -74,13 +74,11 @@ void sendCommand(int8_t command, int16_t dat)
   Send_buf[7] = 0xef; //ending byte
   for(uint8_t i=0; i<8; i++)//
   {
-    MySerial.write(Send_buf[i]) ;
+    MySerial.write(Send_buf[i]);
   }
 }
 
-void Logic::handle() {
-  serial.handle();
-
+void turnOnLights() {
   // for (int dutyCycle = 0; dutyCycle <= 255; dutyCycle++) {
   //   ledcWrite(ledChannel, dutyCycle);
   //   delay(7);
@@ -90,24 +88,34 @@ void Logic::handle() {
   //   ledcWrite(ledChannel, dutyCycle);
   //   delay(7);
   // }
+}
 
-  // digitalWrite(AIN1, LOW);
-  // digitalWrite(AIN2, HIGH);
-  // digitalWrite(PWMA, HIGH);
-  // digitalWrite(STBY, HIGH);
+void open() {
+  digitalWrite(AIN1, LOW);
+  digitalWrite(AIN2, HIGH);
+  digitalWrite(PWMA, HIGH);
+  digitalWrite(STBY, HIGH);
+}
+
+void close() {
+  digitalWrite(AIN1, HIGH);
+  digitalWrite(AIN2, LOW);
+  digitalWrite(PWMA, HIGH);
+  digitalWrite(STBY, HIGH);
+}
+
+void Logic::handle() {
+  serial.handle();
 
   LS_ONE = analogRead(LS_ONE_PIN);
   LS_TWO = analogRead(LS_TWO_PIN);
   
   Serial.printf("1: %d 2: %d \n", LS_ONE, LS_TWO);
-  // if (LS_ONE > LS_ONE_THRESH) {
-  //   Serial.println("LASER ON!");
-  //   Serial.printf("0: %d 1: %d \n", LS_ONE, LS_TWO);
-  //   digitalWrite(13, HIGH); //Turn led on
-  // }
-  // else {
-  //   digitalWrite(13, LOW);  //Turn led off
-  // }
+  if (LS_ONE > LS_ONE_THRESH) {
+     Serial.println("LASER ON!");
+  }
+  else {
+  }
 
   delay(500);
 }
