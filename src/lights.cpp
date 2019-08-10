@@ -13,19 +13,18 @@ Lights::Lights(Logic &logic)
 void Lights::on() {
   Serial.println("on");
 
-  // for (int dutyCycle = 0; dutyCycle <= 255; dutyCycle++) {
-  //   ledcWrite(ledChannel, dutyCycle);
-  //   delay(7);
-  // }
- 
-  // for (int dutyCycle = 255; dutyCycle >= 0; dutyCycle--) {
-  //   ledcWrite(ledChannel, dutyCycle);
-  //   delay(7);
-  // }
+  for (int dutyCycle = 0; dutyCycle <= 255; dutyCycle++) {
+    ledcWrite(ledChannel, dutyCycle);
+    delay(7);
+  }
 }
 
 void Lights::off() {
   Serial.println("off");
+  for (int dutyCycle = 255; dutyCycle >= 0; dutyCycle--) {
+    ledcWrite(ledChannel, dutyCycle);
+    delay(7);
+  }
 }
 
 void Lights::setup() {
