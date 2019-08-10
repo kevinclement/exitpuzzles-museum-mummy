@@ -18,8 +18,12 @@ public:
   void setup();
   void handle();
   void printVariables();
+  
   void open();
   void close();
+  void lightsOn();
+  void lightsOff();
+  
 
 private:
   void readStoredVariables();

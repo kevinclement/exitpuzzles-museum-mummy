@@ -72,3 +72,19 @@ void Logic::printVariables() {
   serial.print(CRLF);
   serial.print("Current Variables:%s", CRLF);
 }
+
+void Logic::lightsOn() {
+  lights.on();
+}
+
+void Logic::lightsOff() {
+  lights.off();
+}
+
+void Logic::open() {
+  actuator.open();
+}
+
+void Logic::close() {
+  actuator.close();
+}

@@ -24,7 +24,7 @@ void LightSensors::handle() {
   LS_ONE = analogRead(LS_ONE_PIN);
   LS_TWO = analogRead(LS_TWO_PIN);
 
-  Serial.printf("1: %d 2: %d \n", LS_ONE, LS_TWO);
+  //Serial.printf("1: %d 2: %d \n", LS_ONE, LS_TWO);
 
   // TODO: debounce
   if (LS_ONE > LS_ONE_THRESH) {
