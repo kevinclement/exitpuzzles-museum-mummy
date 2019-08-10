@@ -58,7 +58,7 @@ void sendCommand(int8_t command, int16_t dat)
 
 void Logic::handle() {
   serial.handle();
-  lightsensor.handle();
+  lightsensors.handle();
 
   delay(500);
 }
@@ -71,6 +71,4 @@ void Logic::readStoredVariables() {
 void Logic::printVariables() { 
   serial.print(CRLF);
   serial.print("Current Variables:%s", CRLF);
-  serial.print("  ONE:  %d%s", LS_ONE, CRLF);
-  serial.print("  TWO:  %d%s", LS_TWO, CRLF);
 }
