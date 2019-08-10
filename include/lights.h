@@ -9,6 +9,9 @@ class Lights {
     Lights(Logic &logic);
     void setup();
 
+    void on();
+    void off();
+
   private:
     Logic &_logic;
 };
