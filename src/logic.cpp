@@ -41,6 +41,10 @@ void sendCommand(int8_t command, int16_t dat);
 
 void Logic::setup() {
   serial.setup();
+  actuator.setup();
+  lights.setup();
+  lightsensors.setup();
+  sound.setup();
 
   readStoredVariables();
 
