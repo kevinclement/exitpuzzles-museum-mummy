@@ -29,7 +29,11 @@ HardwareSerial MySerial(1);
 static int8_t Send_buf[8] = {0};
 
 Logic::Logic() 
-  : serial(*this)
+  : serial(*this),
+    actuator(*this),
+    lights(*this),
+    lightsensors(*this),
+    sound(*this)
 {
 }
 
