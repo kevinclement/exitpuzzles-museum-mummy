@@ -13,7 +13,6 @@ Lights::Lights(Logic &logic)
 {  
 }
 
-
 bool lights_on = false;
 unsigned long lastTime = 0;
 int waitTime = 0;
@@ -25,7 +24,7 @@ void flash() {
   for (int i=0; i<tl; i++)
   {
     ledcWrite(CHANNEL, 255);
-    delay(20 + dl);
+    delay(40 + dl);
     ledcWrite(CHANNEL, 0);
     delay(10);
   }
