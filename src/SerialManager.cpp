@@ -110,6 +110,14 @@ void SerialManager::handleMessage(String msg) {
     print("Stoping sound track...%s", CRLF);
     _logic.sound.stop();
   }
+  else if (command == "acstop" || command == "x") {
+    print("Stoping actuator...%s", CRLF);
+    _logic.actuator.stop();
+  }
+  else if (command == "preload" || command == "e") {
+    print("Preloading actuator...%s", CRLF);
+    _logic.actuator.preload();
+  }
   else if (command == "debug" || command == "d") {
     print("Toggling debug mode...%s", CRLF);
     _logic.lightsensors.debugReadings = !_logic.lightsensors.debugReadings;

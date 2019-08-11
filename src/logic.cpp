@@ -2,7 +2,10 @@
 #include "logic.h"
 #include "consts.h"
 
+#define TIME_TO_OPEN 40000
+
 bool SOLVED = false;
+unsigned long solved_at = 0;
 
 Logic::Logic() 
   : serial(*this),
@@ -30,15 +33,20 @@ void Logic::handle() {
   serial.handle();
   lightsensors.handle();
   lights.handle();
+  actuator.handle();
 
   if (lightsensors.lightDetected && !SOLVED) {
     serial.print("Solved!\n");
 
-    actuator.open();
+    sound.play();
     lights.on();
+    actuator.open();
 
     SOLVED = true;
+    solved_at = millis();
   }
+
+
 }
 
 void Logic::readStoredVariables() {

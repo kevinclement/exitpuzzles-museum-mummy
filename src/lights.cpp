@@ -8,14 +8,14 @@
 #define RES 8
 #define CHANNEL 0
 
+bool lights_on = false;
+unsigned long lastTime = 0;
+int waitTime = 0;
+
 Lights::Lights(Logic &logic)
 : _logic(logic)
 {  
 }
-
-bool lights_on = false;
-unsigned long lastTime = 0;
-int waitTime = 0;
 
 void flash() {
   int tl = abs(esp_random()) % TIMES + 1;
