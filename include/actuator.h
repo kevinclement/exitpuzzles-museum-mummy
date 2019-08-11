@@ -14,6 +14,8 @@ class Actuator {
     void stop();
     void preload();
 
+    bool opened = false;
+
   private:
     Logic &_logic;
 };

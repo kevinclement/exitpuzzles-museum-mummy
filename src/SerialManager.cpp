@@ -122,6 +122,10 @@ void SerialManager::handleMessage(String msg) {
     print("Toggling debug mode...%s", CRLF);
     _logic.lightsensors.debugReadings = !_logic.lightsensors.debugReadings;
   }
+  else if (command == "solved" || command == "z") {
+    print("Triggering solved...%s", CRLF);
+    _logic.solved();
+  }
   else if (command == "threshold") {
     print("setting threshold to '%d'...%s", value, CRLF);
     // LIGHT_THRESHOLD = value;
