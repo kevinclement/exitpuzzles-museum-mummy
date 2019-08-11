@@ -2,10 +2,15 @@
 #include "lightsensors.h"
 #include "Logic.h"
 
+#define DEBOUNCE 500
+
 int LS_ONE = 0;               // light sensor 1 reading
 int LS_ONE_THRESH = 1800;
 int LS_TWO = 0;               // light sensor 2 reading
 int LS_TWO_THRESH = 0;
+
+bool reportedLight = false;
+unsigned long light_first_seen = 0;
 
 // light sensors
 #define LS_ONE_PIN A2
@@ -29,11 +34,22 @@ void LightSensors::handle() {
     _logic.serial.print("1: %d 2: %d \n", LS_ONE, LS_TWO);
   }
   
-
-  // TODO: debounce
   if (LS_ONE > LS_ONE_THRESH) {
-     Serial.println("LASER ON!");
-  }
-  else {
+    if (light_first_seen != 0) {
+      if (millis() - light_first_seen > DEBOUNCE) {
+        if (!reportedLight) {
+          Serial.printf("light detected\n");
+          reportedLight = true;
+        }
+        lightDetected = true;
+      }
+    } else {
+      light_first_seen = millis();
+    }
+  } else {
+      // its dark, so reset
+      light_first_seen = 0;
+      reportedLight = false;
+      lightDetected = false;
   }
 }
