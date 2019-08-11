@@ -8,6 +8,8 @@ class Sound {
   public:
     Sound(Logic &logic);
     void setup();
+    void play();
+    void stop();
 
   private:
     Logic &_logic;

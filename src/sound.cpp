@@ -17,7 +17,6 @@ void Sound::setup() {
   delay(500);              //Wait chip initialization is complete
   sendCommand(0X09, 0X02); // select the TF card
   delay(200);
-  sendCommand(0X22, 0X4601);
 }
 
 void sendCommand(int8_t command, int16_t dat)
@@ -35,6 +34,14 @@ void sendCommand(int8_t command, int16_t dat)
   {
     MySerial.write(Send_buf[i]);
   }
+}
+
+void Sound::play() {
+  sendCommand(0X22, 0X4601);
+}
+
+void Sound::stop() {
+  sendCommand(0X16, 0X00);
 }
 
 

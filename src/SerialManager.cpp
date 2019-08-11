@@ -102,6 +102,14 @@ void SerialManager::handleMessage(String msg) {
     print("Turning lights off...%s", CRLF);
     _logic.lights.off();
   }
+  else if (command == "play" || command == "p") {
+    print("Playing sound track...%s", CRLF);
+    _logic.sound.play();
+  }
+  else if (command == "playstop" || command == "s") {
+    print("Stoping sound track...%s", CRLF);
+    _logic.sound.stop();
+  }
   else if (command == "debug" || command == "d") {
     print("Toggling debug mode...%s", CRLF);
     _logic.lightsensors.debugReadings = !_logic.lightsensors.debugReadings;
