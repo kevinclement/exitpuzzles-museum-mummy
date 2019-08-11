@@ -9,8 +9,10 @@
 #define STBY 33
 
 #define PRELOAD_TIME 5000
+#define CLOSE_TIME 50000
 
 unsigned long preload_start = 0;
+unsigned long close_start = 0;
 
 Actuator::Actuator(Logic &logic)
 : _logic(logic)
@@ -23,12 +25,19 @@ void Actuator::setup() {
   pinMode(AIN2, OUTPUT);
   pinMode(STBY, OUTPUT);
 }
-
+// 42 seconds
 void Actuator::handle() {
   if (preload_start > 0 && millis() - preload_start > PRELOAD_TIME) {
     _logic.serial.print("preload finished.\n");
     preload_start = 0;
     stop();
+  }
+
+  if (close_start > 0 && millis() - close_start > CLOSE_TIME) {
+    _logic.serial.print("closing finished.\n");
+    close_start = 0;
+    _logic.serial.print("Preloading for next open...\n");
+    preload();
   }
 }
 
@@ -40,6 +49,8 @@ void Actuator::open() {
 }
 
 void Actuator::close() {
+  close_start = millis();
+
   digitalWrite(AIN1, HIGH);
   digitalWrite(AIN2, LOW);
   digitalWrite(PWMA, HIGH);
