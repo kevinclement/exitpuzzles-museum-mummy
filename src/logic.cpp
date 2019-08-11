@@ -32,7 +32,11 @@ void Logic::handle() {
   lights.handle();
 
   if (lightsensors.lightDetected && !SOLVED) {
-    Serial.println("solved!!!");
+    serial.print("Solved!\n");
+
+    actuator.open();
+    lights.on();
+
     SOLVED = true;
   }
 }
