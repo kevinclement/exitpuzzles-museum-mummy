@@ -56,7 +56,7 @@ void LightSensors::handle() {
     // check for cheating
     if (lightTwoDetected) {
       if (!reportedCheat) {
-        Serial.printf("CHEATER!\n");
+        _logic.serial.print("CHEATER!\n");
         reportedCheat = true;
       }
       return;
@@ -65,7 +65,7 @@ void LightSensors::handle() {
     if (light_first_seen != 0) {
       if (millis() - light_first_seen > DEBOUNCE) {
         if (!reportedLight) {
-          Serial.printf("light detected\n");
+          _logic.serial.print("light detected\n");
           reportedLight = true;
         }
         lightDetected = true;
