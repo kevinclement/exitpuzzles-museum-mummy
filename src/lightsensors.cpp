@@ -7,10 +7,13 @@
 int LS_ONE = 0;               // light sensor 1 reading
 int LS_ONE_THRESH = 1800;
 int LS_TWO = 0;               // light sensor 2 reading
-int LS_TWO_THRESH = 0;
+int LS_TWO_THRESH = 600;
 
 bool reportedLight = false;
+bool reportedCheat = false;
 unsigned long light_first_seen = 0;
+unsigned long light_two_first_seen = 0;
+bool lightTwoDetected = false;
 
 // light sensors
 #define LS_ONE_PIN A2
@@ -34,7 +37,31 @@ void LightSensors::handle() {
     _logic.serial.print("1: %d 2: %d \n", LS_ONE, LS_TWO);
   }
   
+  if (LS_TWO > LS_TWO_THRESH) {
+    if (light_two_first_seen != 0) {
+      if (millis() - light_two_first_seen > DEBOUNCE) {
+        lightTwoDetected = true;
+      }
+    } else {
+      light_two_first_seen = millis();
+    }
+  } else {
+      light_two_first_seen = 0;
+      lightTwoDetected = false;
+  }
+
   if (LS_ONE > LS_ONE_THRESH) {
+    // first check for flashlight
+    // we do this by looking at the 2nd sensor and if it is also getting light,
+    // then we want to ignore the signal since they are cheating
+    if (lightTwoDetected) {
+      if (!reportedCheat) {
+        Serial.printf("CHEATER! %d\n", LS_TWO);
+        reportedCheat = true;
+      }
+      return;
+    }
+
     if (light_first_seen != 0) {
       if (millis() - light_first_seen > DEBOUNCE) {
         if (!reportedLight) {
