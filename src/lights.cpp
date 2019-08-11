@@ -31,12 +31,10 @@ void flash() {
 }
 
 void Lights::on() {
-  Serial.println("Turning lights on...");
   lights_on = true;
 }
 
 void Lights::off() {
-  Serial.println("Turning lights off...");
   ledcWrite(CHANNEL, 0);
   lights_on = false;
 }

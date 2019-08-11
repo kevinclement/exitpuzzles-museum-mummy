@@ -82,17 +82,14 @@ void SerialManager::handleMessage(String msg) {
       }
   }
  
-  if (command == "open") {
-    print("opening device now...%s", CRLF);
-    //ENABLED = true;
+  if (command == "open" || command == "o") {
+    _logic.open();
   }
-  else if (command == "close") {
-    print("closing device now...%s", CRLF);
-    //ENABLED = false;
+  else if (command == "close" || command == "o") {
+    _logic.close();
   }
   else if (command == "lightson" || command == "l") {
     _logic.lightsOn();
-    
   }
   else if (command == "lightsoff" || command == "f") {
     _logic.lightsOff();
