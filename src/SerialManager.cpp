@@ -90,11 +90,11 @@ void SerialManager::handleMessage(String msg) {
     print("closing device now...%s", CRLF);
     //ENABLED = false;
   }
-  else if (command == "lightson") {
+  else if (command == "lightson" || command == "l") {
     _logic.lightsOn();
     
   }
-  else if (command == "lightsoff") {
+  else if (command == "lightsoff" || command == "f") {
     _logic.lightsOff();
   }
   else if (command == "threshold") {

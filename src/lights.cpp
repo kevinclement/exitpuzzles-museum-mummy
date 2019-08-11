@@ -1,33 +1,61 @@
 #include "Arduino.h"
 #include "lights.h"
 
-const int freq = 5000;
-const int ledChannel = 0;
-const int resolution = 8;
+#define BETWEEN 2579
+#define DURATION 43 
+#define TIMES 7
+#define FREQ 5000
+#define RES 8
+#define CHANNEL 0
 
 Lights::Lights(Logic &logic)
 : _logic(logic)
 {  
 }
 
-void Lights::on() {
-  Serial.println("on");
 
-  for (int dutyCycle = 0; dutyCycle <= 255; dutyCycle++) {
-    ledcWrite(ledChannel, dutyCycle);
-    delay(7);
+bool lights_on = false;
+unsigned long lastTime = 0;
+int waitTime = 0;
+
+void flash() {
+  int tl = abs(esp_random()) % TIMES + 1;
+  int dl = abs(esp_random()) % DURATION + 1;
+
+  for (int i=0; i<tl; i++)
+  {
+    ledcWrite(CHANNEL, 255);
+    delay(20 + dl);
+    ledcWrite(CHANNEL, 0);
+    delay(10);
   }
+}
+
+void Lights::on() {
+  Serial.println("Turning lights on...");
+  lights_on = true;
 }
 
 void Lights::off() {
-  Serial.println("off");
-  for (int dutyCycle = 255; dutyCycle >= 0; dutyCycle--) {
-    ledcWrite(ledChannel, dutyCycle);
-    delay(7);
-  }
+  Serial.println("Turning lights off...");
+  ledcWrite(CHANNEL, 0);
+  lights_on = false;
 }
 
 void Lights::setup() {
-  ledcSetup(ledChannel, freq, resolution);
-  ledcAttachPin(27, ledChannel);
+  ledcSetup(CHANNEL, FREQ, RES);
+  ledcAttachPin(27, CHANNEL);
+}
+
+void Lights::handle() {
+  if (lights_on) {
+    if (millis() - waitTime > lastTime)  // time for a new flash
+    {
+      // adjust timing params
+      lastTime += waitTime;
+      waitTime = abs(esp_random()) % BETWEEN + 1;
+
+      flash();
+    }
+  }
 }

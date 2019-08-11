@@ -8,6 +8,7 @@ class Lights {
   public:
     Lights(Logic &logic);
     void setup();
+    void handle();
 
     void on();
     void off();

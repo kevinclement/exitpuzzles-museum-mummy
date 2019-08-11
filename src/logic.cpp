@@ -24,12 +24,10 @@ void Logic::setup() {
   printVariables();
 }
 
-
 void Logic::handle() {
   serial.handle();
   lightsensors.handle();
-
-  delay(500);
+  lights.handle();
 }
 
 void Logic::readStoredVariables() {
