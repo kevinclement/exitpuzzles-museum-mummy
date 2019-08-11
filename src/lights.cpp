@@ -19,7 +19,8 @@ int waitTime = 0;
 
 void flash() {
   int tl = abs(esp_random()) % TIMES + 1;
-  int dl = abs(esp_random()) % DURATION + 1;
+  //int dl = abs(esp_random()) % DURATION + 1;
+  int dl = 22;
 
   for (int i=0; i<tl; i++)
   {
