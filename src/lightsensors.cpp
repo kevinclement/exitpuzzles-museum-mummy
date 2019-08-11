@@ -37,6 +37,7 @@ void LightSensors::handle() {
     _logic.serial.print("1: %d 2: %d \n", LS_ONE, LS_TWO);
   }
   
+  // Debounce sensor 2
   if (LS_TWO > LS_TWO_THRESH) {
     if (light_two_first_seen != 0) {
       if (millis() - light_two_first_seen > DEBOUNCE) {
@@ -50,13 +51,12 @@ void LightSensors::handle() {
       lightTwoDetected = false;
   }
 
+  // Debounce sensor 1
   if (LS_ONE > LS_ONE_THRESH) {
-    // first check for flashlight
-    // we do this by looking at the 2nd sensor and if it is also getting light,
-    // then we want to ignore the signal since they are cheating
+    // check for cheating
     if (lightTwoDetected) {
       if (!reportedCheat) {
-        Serial.printf("CHEATER! %d\n", LS_TWO);
+        Serial.printf("CHEATER!\n");
         reportedCheat = true;
       }
       return;
@@ -74,9 +74,12 @@ void LightSensors::handle() {
       light_first_seen = millis();
     }
   } else {
-      // its dark, so reset
       light_first_seen = 0;
       reportedLight = false;
       lightDetected = false;
+  }
+
+  if (!lightDetected && !lightTwoDetected) {
+    reportedCheat = false;
   }
 }
