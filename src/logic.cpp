@@ -50,28 +50,3 @@ void Logic::printVariables() {
   serial.print(CRLF);
   serial.print("Current Variables:%s", CRLF);
 }
-
-void Logic::lightsOn() {
-  serial.print("Turning lights on...%s", CRLF);
-  lights.on();
-}
-
-void Logic::lightsOff() {
-  serial.print("Turning lights off...%s", CRLF);
-  lights.off();
-}
-
-void Logic::open() {
-  serial.print("Opening device...%s", CRLF);
-  actuator.open();
-}
-
-void Logic::close() {
-  serial.print("Closing device...%s", CRLF);
-  actuator.close();
-}
-
-void Logic::debug() {
-  serial.print("Toggling debug mode...%s", CRLF);
-  lightsensors.debugReadings = !lightsensors.debugReadings;
-}

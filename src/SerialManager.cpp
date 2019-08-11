@@ -83,22 +83,28 @@ void SerialManager::handleMessage(String msg) {
   }
  
   if (command == "open" || command == "o") {
-    _logic.open();
+    print("Opening device...%s", CRLF);
+    _logic.actuator.open();
   }
   else if (command == "close" || command == "c") {
-    _logic.close();
+    print("Closing device...%s", CRLF);
+    _logic.actuator.close();
   }
   else if (command == "lightson" || command == "l") {
-    _logic.lightsOn();
+    print("Turning lights on...%s", CRLF);
+    _logic.lights.on();
   }
   else if (command == "lightsall" || command == "a") {
+    print("Turning all lights on...%s", CRLF);
     _logic.lights.allOn();
   }
   else if (command == "lightsoff" || command == "f") {
-    _logic.lightsOff();
+    print("Turning lights off...%s", CRLF);
+    _logic.lights.off();
   }
   else if (command == "debug" || command == "d") {
-    _logic.debug();
+    print("Toggling debug mode...%s", CRLF);
+    _logic.lightsensors.debugReadings = !_logic.lightsensors.debugReadings;
   }
   else if (command == "threshold") {
     print("setting threshold to '%d'...%s", value, CRLF);
