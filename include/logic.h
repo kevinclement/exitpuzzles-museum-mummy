@@ -23,6 +23,7 @@ public:
   void close();
   void lightsOn();
   void lightsOff();
+  void debug();
   
 
 private:

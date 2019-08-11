@@ -11,6 +11,7 @@ class LightSensors {
     void handle();
 
     bool lightDetected = false;
+    bool debugReadings = false;
 
   private:
     Logic &_logic;

@@ -97,6 +97,9 @@ void SerialManager::handleMessage(String msg) {
   else if (command == "lightsoff" || command == "f") {
     _logic.lightsOff();
   }
+  else if (command == "debug" || command == "d") {
+    _logic.debug();
+  }
   else if (command == "threshold") {
     print("setting threshold to '%d'...%s", value, CRLF);
     // LIGHT_THRESHOLD = value;

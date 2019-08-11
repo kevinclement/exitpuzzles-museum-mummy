@@ -55,3 +55,8 @@ void Logic::open() {
 void Logic::close() {
   actuator.close();
 }
+
+void Logic::debug() {
+  serial.print("Toggling debug mode...%s", CRLF);
+  lightsensors.debugReadings = !lightsensors.debugReadings;
+}

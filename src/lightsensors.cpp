@@ -1,5 +1,6 @@
 #include "Arduino.h"
 #include "lightsensors.h"
+#include "Logic.h"
 
 int LS_ONE = 0;               // light sensor 1 reading
 int LS_ONE_THRESH = 1800;
@@ -24,7 +25,10 @@ void LightSensors::handle() {
   LS_ONE = analogRead(LS_ONE_PIN);
   LS_TWO = analogRead(LS_TWO_PIN);
 
-  //Serial.printf("1: %d 2: %d \n", LS_ONE, LS_TWO);
+  if (debugReadings) {
+    _logic.serial.print("1: %d 2: %d \n", LS_ONE, LS_TWO);
+  }
+  
 
   // TODO: debounce
   if (LS_ONE > LS_ONE_THRESH) {
