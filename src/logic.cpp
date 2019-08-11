@@ -2,6 +2,8 @@
 #include "logic.h"
 #include "consts.h"
 
+bool SOLVED = false;
+
 Logic::Logic() 
   : serial(*this),
     actuator(*this),
@@ -28,6 +30,11 @@ void Logic::handle() {
   serial.handle();
   lightsensors.handle();
   lights.handle();
+
+  if (lightsensors.lightDetected && !SOLVED) {
+    Serial.println("solved!!!");
+    SOLVED = true;
+  }
 }
 
 void Logic::readStoredVariables() {
