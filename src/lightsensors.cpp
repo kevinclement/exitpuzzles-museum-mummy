@@ -5,9 +5,9 @@
 #define DEBOUNCE 500
 
 int LS_ONE = 0;               // light sensor 1 reading
-int LS_ONE_THRESH = 1800;
+int LS_ONE_THRESH = 3000;
 int LS_TWO = 0;               // light sensor 2 reading
-int LS_TWO_THRESH = 600;
+int LS_TWO_THRESH = 1000;
 
 bool reportedLight = false;
 bool reportedCheat = false;
@@ -16,8 +16,8 @@ unsigned long light_two_first_seen = 0;
 bool lightTwoDetected = false;
 
 // light sensors
-#define LS_ONE_PIN A2
-#define LS_TWO_PIN A3
+#define LS_ONE_PIN A3
+#define LS_TWO_PIN A2
 
 LightSensors::LightSensors(Logic &logic)
 : _logic(logic)

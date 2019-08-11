@@ -85,11 +85,14 @@ void SerialManager::handleMessage(String msg) {
   if (command == "open" || command == "o") {
     _logic.open();
   }
-  else if (command == "close" || command == "o") {
+  else if (command == "close" || command == "c") {
     _logic.close();
   }
   else if (command == "lightson" || command == "l") {
     _logic.lightsOn();
+  }
+  else if (command == "lightsall" || command == "a") {
+    _logic.lights.allOn();
   }
   else if (command == "lightsoff" || command == "f") {
     _logic.lightsOff();

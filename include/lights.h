@@ -12,6 +12,7 @@ class Lights {
 
     void on();
     void off();
+    void allOn();
 
   private:
     Logic &_logic;
