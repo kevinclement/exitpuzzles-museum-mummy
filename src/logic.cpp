@@ -6,7 +6,7 @@ unsigned long solved_at = 0;
 bool stopped_all = false;
 
 Logic::Logic() 
-  : serial(*this),
+  : serial(),
     actuator(*this),
     lights(*this),
     lightsensors(*this),
@@ -15,16 +15,14 @@ Logic::Logic()
 }
 
 void Logic::setup() {
-  serial.setup();
+  serial.setup("ExitMuseumMummy");
+
   actuator.setup();
   lights.setup();
   lightsensors.setup();
   sound.setup();
 
   readStoredVariables();
-
-  serial.printHelp();
-  printVariables();
 }
 
 void Logic::handle() {
