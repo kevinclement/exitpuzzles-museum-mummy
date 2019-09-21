@@ -9,6 +9,10 @@ void reboot(int) {
   ESP.restart();
 }
 
+void status(int) {
+  logic.status();
+}
+
 void solve(int) {
   logic.serial.print("forcing a puzzle solve...%s", CRLF);
   logic.solved();
@@ -23,12 +27,13 @@ void setup() {
   logic.setup();
   logic.serial.print("Museum Mummy by kevinc...\n");
 
-  logic.serial.registerCommand(SerialCommand("solve",      's', &solve,      "solve",      "force a puzzle solve of the device"));
+  logic.serial.registerCommand(SerialCommand("status",     's', &status,     "status",     "gets the status of device"));
+  logic.serial.registerCommand(SerialCommand("solve",      'v', &solve,      "solve",      "force a puzzle solve of the device"));
   logic.serial.registerCommand(SerialCommand("debug",      'x', &debug,      "debug",      "debug sensors"));
   logic.serial.registerCommand(SerialCommand("reboot",     'r', &reboot,     "reboot",     "software reboot the device"));
 
   logic.serial.printHelp();
-  logic.printVariables();
+  logic.status();
 }
 
 void loop() {

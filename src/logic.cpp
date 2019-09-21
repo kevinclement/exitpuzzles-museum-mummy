@@ -22,8 +22,6 @@ void Logic::setup() {
   lightsensors.setup();
   sound.setup();
 
-  readStoredVariables();
-
   // trigger a close, if its already closed then noop
   // if this is a reset, then close here will do the actual close
   actuator.close();
@@ -57,12 +55,10 @@ void Logic::solved() {
   solved_at = millis();
 }
 
-void Logic::readStoredVariables() {
-  //EEPROM.begin(64); // don't need a big size
-  //EEPROM.get(FOO_VAR_ADDR, FOO_VAR);
-}
-
-void Logic::printVariables() { 
-  serial.print(CRLF);
-  serial.print("Current Variables:%s", CRLF);
+void Logic::status() {
+  serial.print(
+    "status=solved:%s"
+    "%s",
+    solved_at > 0 ? "true" : "false",
+    CRLF);
 }
