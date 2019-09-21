@@ -23,6 +23,10 @@ void Logic::setup() {
   sound.setup();
 
   readStoredVariables();
+
+  // trigger a close, if its already closed then noop
+  // if this is a reset, then close here will do the actual close
+  actuator.close();
 }
 
 void Logic::handle() {

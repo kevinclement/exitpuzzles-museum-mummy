@@ -9,6 +9,11 @@ void reboot(int) {
   ESP.restart();
 }
 
+void solve(int) {
+  logic.serial.print("forcing a puzzle solve...%s", CRLF);
+  logic.solved();
+}
+
 void debug(int) {
   logic.serial.print("toggling light sensor debugging...%s", CRLF);
   logic.lightsensors.debugReadings = !logic.lightsensors.debugReadings;
@@ -18,6 +23,7 @@ void setup() {
   logic.setup();
   logic.serial.print("Museum Mummy by kevinc...\n");
 
+  logic.serial.registerCommand(SerialCommand("solve",      's', &solve,      "solve",      "force a puzzle solve of the device"));
   logic.serial.registerCommand(SerialCommand("debug",      'x', &debug,      "debug",      "debug sensors"));
   logic.serial.registerCommand(SerialCommand("reboot",     'r', &reboot,     "reboot",     "software reboot the device"));
 
