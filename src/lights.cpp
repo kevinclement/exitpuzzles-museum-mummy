@@ -18,14 +18,10 @@ Lights::Lights(Logic &logic)
 }
 
 void flash() {
-  int tl = abs(esp_random()) % TIMES + 1;
-  //int dl = abs(esp_random()) % DURATION + 1;
-  int dl = 22;
-
-  for (int i=0; i<tl; i++)
+  for (int i=0; i< random(TIMES); i++)
   {
     ledcWrite(CHANNEL, 255);
-    delay(40 + dl);
+    delay(62);
     ledcWrite(CHANNEL, 0);
     delay(10);
   }
@@ -55,7 +51,7 @@ void Lights::handle() {
     {
       // adjust timing params
       lastTime += waitTime;
-      waitTime = abs(esp_random()) % BETWEEN + 1;
+      waitTime = random(BETWEEN);
 
       flash();
     }
