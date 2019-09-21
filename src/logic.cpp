@@ -53,6 +53,7 @@ void Logic::solved() {
   actuator.open();
 
   solved_at = millis();
+  status();
 }
 
 void Logic::status() {
