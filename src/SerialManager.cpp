@@ -1,6 +1,6 @@
 #include "Arduino.h"
 #include "consts.h"
-#include "Logic.h"
+#include "logic.h"
 #include "BluetoothSerial.h"
 
 BluetoothSerial SerialBT;
