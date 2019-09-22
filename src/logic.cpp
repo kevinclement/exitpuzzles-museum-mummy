@@ -37,6 +37,11 @@ void Logic::handle() {
     solved();
   }
 
+  // don't start the flashing until a few seconds to sync with audio
+  if (!lights.lights_on && solved_at > 0 && millis() - solved_at > 2800) {
+    lights.on();
+  }
+
   if (!stopped_all && solved_at != 0 && actuator.opened) {
     serial.print("All done with lights and music!\n");
     sound.stop();
@@ -49,7 +54,6 @@ void Logic::solved() {
   serial.print("Solved!\n");
 
   sound.play();
-  lights.on();
   actuator.open();
 
   solved_at = millis();

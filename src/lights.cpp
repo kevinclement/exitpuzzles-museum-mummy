@@ -8,7 +8,6 @@
 #define RES 8
 #define CHANNEL 0
 
-bool lights_on = false;
 unsigned long lastTime = 0;
 int waitTime = 0;
 
