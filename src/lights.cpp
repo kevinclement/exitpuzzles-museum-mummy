@@ -28,6 +28,7 @@ void flash() {
 
 void Lights::on() {
   lights_on = true;
+  lastTime = 0;
 }
 
 void Lights::allOn() {
@@ -50,7 +51,8 @@ void Lights::handle() {
     {
       // adjust timing params
       lastTime += waitTime;
-      waitTime = random(BETWEEN);
+      waitTime = random(700, BETWEEN);
+      //Serial.printf("wait: %d\r\n", waitTime);
 
       flash();
     }
