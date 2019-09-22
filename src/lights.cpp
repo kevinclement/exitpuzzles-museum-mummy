@@ -9,7 +9,7 @@
 #define CHANNEL 0
 
 unsigned long lastTime = 0;
-int waitTime = 0;
+int waitTime = 1500;
 
 Lights::Lights(Logic &logic)
 : _logic(logic)
@@ -47,14 +47,11 @@ void Lights::setup() {
 
 void Lights::handle() {
   if (lights_on) {
-    if (millis() - waitTime > lastTime)  // time for a new flash
+    if (millis() - lastTime > waitTime)  // time for a new flash
     {
       // adjust timing params
-      lastTime += waitTime;
-      waitTime = random(700, BETWEEN);
-      //Serial.printf("wait: %d\r\n", waitTime);
-
       flash();
+      lastTime = millis();
     }
   }
 }

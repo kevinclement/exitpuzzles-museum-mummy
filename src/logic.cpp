@@ -38,7 +38,7 @@ void Logic::handle() {
   }
 
   // don't start the flashing until a few seconds to sync with audio
-  if (!lights.lights_on && solved_at > 0 && millis() - solved_at > 2800) {
+  if (!stopped_all && !lights.lights_on && solved_at > 0 && millis() - solved_at > 2800) {
     lights.on();
   }
 
