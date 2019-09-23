@@ -10,7 +10,7 @@
 
 #define PRELOAD_TIME 5000
 #define CLOSE_TIME 47000
-#define OPEN_TIME 45000 // assumes preload
+#define OPEN_TIME 51000 // assumes preload
 
 unsigned long preload_start = 0;
 unsigned long close_start = 0;
