@@ -37,7 +37,7 @@ void sendCommand(int8_t command, int16_t dat)
 }
 
 void Sound::play() {
-  sendCommand(0X22, 0X4601);
+  sendCommand(0X22, 0X4603);
 }
 
 void Sound::stop() {
