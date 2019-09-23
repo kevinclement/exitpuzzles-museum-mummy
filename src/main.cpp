@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include "logic.h"
 #include "consts.h"
+#include "version.h"
 
 // Globals
 Logic logic;
@@ -35,6 +36,7 @@ void debug(int) {
 void setup() {
   logic.setup();
   logic.serial.print("Museum Mummy by kevinc...\n");
+  Serial.println(getFullVersion("museum-mummy"));
 
   logic.serial.registerCommand(SerialCommand("status",     's', &status,     "status",     "gets the status of device"));
   logic.serial.registerCommand(SerialCommand("solve",      'v', &solve,      "solve",      "force a puzzle solve of the device"));
