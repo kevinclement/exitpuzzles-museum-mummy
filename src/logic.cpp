@@ -61,9 +61,19 @@ void Logic::solved() {
 }
 
 void Logic::status() {
-  serial.print(
-    "status=solved:%s"
-    "%s",
-    solved_at > 0 ? "true" : "false",
-    CRLF);
+  char cMsg[254];
+  sprintf(cMsg, 
+    "status="
+      "version:%s,"
+      "gitDate:%s,"
+      "buildDate:%s,"
+      "solved:%s"
+      "%s"
+    , GIT_HASH,
+      GIT_DATE,
+      DATE_NOW,
+      solved_at > 0 ? "true" : "false",
+      CRLF);
+
+  serial.print(cMsg);
 }
