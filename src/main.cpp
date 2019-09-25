@@ -38,11 +38,11 @@ void setup() {
   logic.serial.print("Museum Mummy by kevinc...\n");
   Serial.println(getFullVersion("museum-mummy"));
 
-  logic.serial.registerCommand(SerialCommand("status",     's', &status,     "status",     "gets the status of device"));
-  logic.serial.registerCommand(SerialCommand("solve",      'v', &solve,      "solve",      "force a puzzle solve of the device"));
-  logic.serial.registerCommand(SerialCommand("lights",     'l', &lights,     "lights",     "toggle lights on and off"));
-  logic.serial.registerCommand(SerialCommand("debug",      'x', &debug,      "debug",      "debug sensors"));
-  logic.serial.registerCommand(SerialCommand("reboot",     'r', &reboot,     "reboot",     "software reboot the device"));
+  logic.serial.registerCommand(SerialCommand("status", 's', &status, "status", "gets the status of device"));
+  logic.serial.registerCommand(SerialCommand("solve",  'v', &solve,  "solve",  "force a puzzle solve of the device"));
+  logic.serial.registerCommand(SerialCommand("lights", 'l', &lights, "lights", "toggle lights on and off"));
+  logic.serial.registerCommand(SerialCommand("debug",  'x', &debug,  "debug",  "debug sensors"));
+  logic.serial.registerCommand(SerialCommand("reboot", 'r', &reboot, "reboot", "software reboot the device"));
 
   logic.serial.printHelp();
   logic.status();
