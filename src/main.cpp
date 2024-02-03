@@ -20,11 +20,20 @@ void solve(int) {
 }
 
 void lights(int) {
-  logic.serial.print("toggling lights...%s", CRLF);
+  logic.serial.print("toggling light show...%s", CRLF);
   if (logic.lights.lights_on) {
     logic.lights.off();
   } else {
     logic.lights.on();
+  }
+}
+
+void toggleLights(int) {
+  logic.serial.print("toggling lights...%s", CRLF);
+  if (logic.lights.lights_all_on) {
+    logic.lights.off();
+  } else {
+    logic.lights.allOn();
   }
 }
 
@@ -38,11 +47,12 @@ void setup() {
   logic.serial.print("Museum Mummy by kevinc...\n");
   Serial.println(getFullVersion("museum-mummy"));
 
-  logic.serial.registerCommand(SerialCommand("status", 's', &status, "status", "gets the status of device"));
-  logic.serial.registerCommand(SerialCommand("solve",  'v', &solve,  "solve",  "force a puzzle solve of the device"));
-  logic.serial.registerCommand(SerialCommand("lights", 'l', &lights, "lights", "toggle lights on and off"));
-  logic.serial.registerCommand(SerialCommand("debug",  'x', &debug,  "debug",  "debug sensors"));
-  logic.serial.registerCommand(SerialCommand("reboot", 'r', &reboot, "reboot", "software reboot the device"));
+  logic.serial.registerCommand(SerialCommand("status",       's', &status,       "status",       "gets the status of device"));
+  logic.serial.registerCommand(SerialCommand("solve",        'v', &solve,        "solve",        "force a puzzle solve of the device"));
+  logic.serial.registerCommand(SerialCommand("lights",       'l', &lights,       "lights",       "trigger light show"));
+  logic.serial.registerCommand(SerialCommand("togglelights", 'o', &toggleLights, "togglelights", "toggle lights on and off"));
+  logic.serial.registerCommand(SerialCommand("debug",        'x', &debug,        "debug",        "debug sensors"));
+  logic.serial.registerCommand(SerialCommand("reboot",       'r', &reboot,       "reboot",       "software reboot the device"));
 
   logic.serial.printHelp();
   logic.status();

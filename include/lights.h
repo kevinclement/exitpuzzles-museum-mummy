@@ -15,6 +15,7 @@ class Lights {
     void allOn();
 
     bool lights_on = false;
+    bool lights_all_on = false;
   private:
     Logic &_logic;
 };

@@ -32,12 +32,13 @@ void Lights::on() {
 }
 
 void Lights::allOn() {
-  ledcWrite(CHANNEL, 255);
+  lights_all_on = true;
 }
 
 void Lights::off() {
   ledcWrite(CHANNEL, 0);
   lights_on = false;
+  lights_all_on = false;
 }
 
 void Lights::setup() {
@@ -53,5 +54,10 @@ void Lights::handle() {
       flash();
       lastTime = millis();
     }
+  }
+
+  // only used manually, not exposed to admin
+  if (lights_all_on) {
+    ledcWrite(CHANNEL, 255);
   }
 }
