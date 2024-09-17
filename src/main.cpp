@@ -28,6 +28,18 @@ void lights(int) {
   }
 }
 
+bool playing_sounds = false;
+void toggleSounds(int) {
+  logic.serial.print("toggling playing sounds...%s", CRLF);
+  if (!playing_sounds) {
+    logic.sound.play();
+    playing_sounds = true;
+  } else {
+    logic.sound.stop();
+    playing_sounds = false;
+  }
+}
+
 void toggleLights(int) {
   logic.serial.print("toggling lights...%s", CRLF);
   if (logic.lights.lights_all_on) {
@@ -50,6 +62,7 @@ void setup() {
   logic.serial.registerCommand(SerialCommand("status",       's', &status,       "status",       "gets the status of device"));
   logic.serial.registerCommand(SerialCommand("solve",        'v', &solve,        "solve",        "force a puzzle solve of the device"));
   logic.serial.registerCommand(SerialCommand("lights",       'l', &lights,       "lights",       "trigger light show"));
+  logic.serial.registerCommand(SerialCommand("sounds",       'd', &toggleSounds, "toggleSounds", "toggle sounds"));
   logic.serial.registerCommand(SerialCommand("togglelights", 'o', &toggleLights, "togglelights", "toggle lights on and off"));
   logic.serial.registerCommand(SerialCommand("debug",        'x', &debug,        "debug",        "debug sensors"));
   logic.serial.registerCommand(SerialCommand("reboot",       'r', &reboot,       "reboot",       "software reboot the device"));
